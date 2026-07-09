@@ -1,3 +1,26 @@
+body{
+    margin:0;
+    background:black;
+    color:white;
+    text-align:center;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
+}
+
+h1{
+    margin-top:40px;
+    font-size:50px;
+}
+
+p{
+    font-size:30px;
+}
+
+#score,#best{
+    font-size:22px;
+    margin-top:8px;
+}
+
 #circle{
     width:40px;
     height:40px;
@@ -6,8 +29,4 @@
     position:absolute;
     cursor:pointer;
     transition:all .15s ease;
-}
-#best{
-    font-size:22px;
-    margin-top:8px;
 }
