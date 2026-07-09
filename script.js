@@ -79,9 +79,10 @@ levelUp.animate(
     }
 
     if (navigator.vibrate) {
-        navigator.vibrate(15);
+    navigator.vibrate(15);
+}
+
 createSpark();
-    }
 
     size = Math.max(10, size - 0.5);
 
@@ -106,13 +107,24 @@ function moveCircle() {
 
     circle.style.left = x + "px";
     circle.style.top = y + "px";
-circle.textContent =
+const target =
 targets[Math.floor(Math.random()*targets.length)];
+
+circle.textContent = target;
+
+if(target==="●"){
+    circle.style.background="white";
+}
+else{
+    circle.style.background="transparent";
+}
+
+circle.style.boxShadow="none";
 }
 
 function createSpark(){
 
-for(let i=0;i<8;i++){
+for(let i=0;i<20;i++)
 
 const s=document.createElement("div");
 
@@ -135,7 +147,7 @@ document.body.appendChild(s);
 
 const angle=Math.random()*360;
 
-const distance=30+Math.random()*40;
+const distance=40+Math.random()*80;
 
 s.animate([
 
