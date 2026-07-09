@@ -25,8 +25,13 @@ plusOne.textContent="+1";
 
 plusOne.style.left=circle.style.left;
 plusOne.style.top=circle.style.top;
+plusOne.style.opacity = "1";
 
 plusOne.animate(
+setTimeout(() => {
+    plusOne.style.opacity = "0";
+}, 500);
+
 [
  {transform:"translateY(0px)",opacity:1},
  {transform:"translateY(-60px)",opacity:0}
