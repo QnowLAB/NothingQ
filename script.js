@@ -17,7 +17,7 @@ circle.addEventListener("click", () => {
 
     if(score > bestScore){
         bestScore = score;
-        localStorage.setItem("bestScore",bestScore);
+        localStorage.setItem("bestScore", bestScore);
         best.textContent = bestScore;
     }
 
@@ -25,13 +25,13 @@ circle.addEventListener("click", () => {
         navigator.vibrate(20);
     }
 
-    size = Math.max(10,size-1);
+    size = Math.max(10, size - 1);
 
-    circle.style.width=size+"px";
-    circle.style.height=size+"px";
+    circle.style.width = size + "px";
+    circle.style.height = size + "px";
 
-    circle.style.background=
-        "hsl("+(Math.random()*360)+",100%,60%)";
+    circle.style.background =
+        "hsl(" + (Math.random()*360) + ",100%,60%)";
 
     createSpark();
 
@@ -41,26 +41,25 @@ circle.addEventListener("click", () => {
 
 function moveCircle(){
 
-    const x=Math.random()*(window.innerWidth-size);
+    const x = Math.random() * (window.innerWidth - size);
+    const y = Math.random() * (window.innerHeight - size);
 
-    const y=Math.random()*(window.innerHeight-size);
-
-    circle.style.left=x+"px";
-    circle.style.top=y+"px";
+    circle.style.left = x + "px";
+    circle.style.top = y + "px";
 
 }
 
 function createSpark(){
 
-    const s=document.createElement("div");
+    const s = document.createElement("div");
 
-    s.style.position="absolute";
-    s.style.left=circle.style.left;
-    s.style.top=circle.style.top;
-    s.style.width="12px";
-    s.style.height="12px";
-    s.style.borderRadius="50%";
-    s.style.background="yellow";
+    s.style.position = "absolute";
+    s.style.left = circle.style.left;
+    s.style.top = circle.style.top;
+    s.style.width = "12px";
+    s.style.height = "12px";
+    s.style.borderRadius = "50%";
+    s.style.background = "yellow";
 
     document.body.appendChild(s);
 
