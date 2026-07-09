@@ -3,6 +3,10 @@ let size = 40;
 
 const circle = document.getElementById("circle");
 const points = document.getElementById("points");
+const best = document.getElementById("bestScore");
+
+let bestScore = localStorage.getItem("bestScore") || 0;
+best.textContent = bestScore;
 
 moveCircle();
 
@@ -11,41 +15,66 @@ circle.addEventListener("click", () => {
     score++;
     points.textContent = score;
 
-    if (navigator.vibrate) {
-        navigator.vibrate(25);
+    if(score > bestScore){
+        bestScore = score;
+        localStorage.setItem("bestScore",bestScore);
+        best.textContent = bestScore;
     }
 
-    size = Math.max(10, size - 1);
+    if(navigator.vibrate){
+        navigator.vibrate(20);
+    }
 
-    circle.style.width = size + "px";
-    circle.style.height = size + "px";
+    size = Math.max(10,size-1);
 
-    circle.animate(
-        [
-            { transform: "scale(1)" },
-            { transform: "scale(1.4)" },
-            { transform: "scale(1)" }
-        ],
-        {
-            duration: 180
-        }
-    );
+    circle.style.width=size+"px";
+    circle.style.height=size+"px";
+
+    circle.style.background=
+        "hsl("+(Math.random()*360)+",100%,60%)";
+
+    createSpark();
 
     moveCircle();
 
-    if (score == 10) {
-        alert("🎉 Level 2");
-    }
-
 });
 
-function moveCircle() {
+function moveCircle(){
 
-    const x = Math.random() * (window.innerWidth - size);
+    const x=Math.random()*(window.innerWidth-size);
 
-    const y = Math.random() * (window.innerHeight - size);
+    const y=Math.random()*(window.innerHeight-size);
 
-    circle.style.left = x + "px";
-    circle.style.top = y + "px";
+    circle.style.left=x+"px";
+    circle.style.top=y+"px";
+
+}
+
+function createSpark(){
+
+    const s=document.createElement("div");
+
+    s.style.position="absolute";
+    s.style.left=circle.style.left;
+    s.style.top=circle.style.top;
+    s.style.width="12px";
+    s.style.height="12px";
+    s.style.borderRadius="50%";
+    s.style.background="yellow";
+
+    document.body.appendChild(s);
+
+    s.animate(
+    [
+        {transform:"scale(1)",opacity:1},
+        {transform:"scale(8)",opacity:0}
+    ],
+    {
+        duration:400
+    });
+
+    setTimeout(()=>{
+        s.remove();
+    },400);
 
 }
