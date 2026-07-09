@@ -1,51 +1,61 @@
 body{
 
-    background:black;
-    color:white;
-    text-align:center;
-    font-family:Arial,sans-serif;
-    margin:0;
-    overflow:hidden;
+background:#000;
+
+color:white;
+
+font-family:Arial,sans-serif;
+
+text-align:center;
+
+margin:0;
+
+overflow:hidden;
 
 }
 
 h1{
 
-    margin-top:30px;
-    font-size:48px;
+margin-top:30px;
+
+font-size:50px;
 
 }
 
 p{
 
-    font-size:24px;
+font-size:24px;
 
 }
 
-#score,#best{
+#level,
+#score,
+#coins,
+#best,
+#combo{
 
-    font-size:22px;
+font-size:22px;
+
+margin-top:8px;
 
 }
 
 #circle{
 
-    position:absolute;
+position:absolute;
 
-    width:40px;
-    height:40px;
+width:40px;
 
-    background:white;
+height:40px;
 
-    border-radius:50%;
+background:white;
 
-    cursor:pointer;
+border-radius:50%;
 
-    transition:
-    left .15s,
-    top .15s,
-    width .15s,
-    height .15s,
-    background .15s;
+cursor:pointer;
+
+transition:.15s;
+
+box-shadow:0 0 25px white;
 
 }
