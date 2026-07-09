@@ -12,15 +12,8 @@ margin:0;
 
 overflow:hidden;
 
-}
+transition:background .5s;
 
-#plusOne{
-    position:absolute;
-    color:gold;
-    font-size:28px;
-    font-weight:bold;
-    pointer-events:none;
-    opacity:0;
 }
 
 h1{
@@ -49,30 +42,112 @@ margin-top:8px;
 
 }
 
-#circle{
-    position:absolute;
-    width:60px;
-    height:60px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:42px;
-    cursor:pointer;
-    user-select:none;
-    transition:.2s;
+hr{
+
+width:80%;
+margin:25px auto;
+border:1px solid #333;
+
 }
+
+#shop{
+
+margin-top:20px;
+
+}
+
+#shop h2{
+
+margin-bottom:10px;
+
+}
+
+button{
+
+padding:12px 20px;
+
+font-size:18px;
+
+border:none;
+
+border-radius:12px;
+
+background:#444;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#666;
+
+}
+
+#circle{
+
+position:absolute;
+
+width:60px;
+
+height:60px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:42px;
+
+cursor:pointer;
+
+user-select:none;
+
+transition:.2s;
+
+border-radius:50%;
+
+}
+
+#plusOne{
+
+position:absolute;
+
+color:gold;
+
+font-size:28px;
+
+font-weight:bold;
+
+pointer-events:none;
+
+opacity:0;
 
 }
 
 #levelUp{
-    position:fixed;
-    top:45%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    font-size:48px;
-    font-weight:bold;
-    color:gold;
-    text-shadow:0 0 25px gold;
-    opacity:0;
-    pointer-events:none;
+
+position:fixed;
+
+top:45%;
+
+left:50%;
+
+transform:translate(-50%,-50%);
+
+font-size:48px;
+
+font-weight:bold;
+
+color:gold;
+
+text-shadow:0 0 25px gold;
+
+opacity:0;
+
+pointer-events:none;
+
 }
