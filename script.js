@@ -1,102 +1,81 @@
-let score = 0;
-let coins = 0;
-let combo = 1;
-let level = 1;
+let score=0;
 
-const points = document.getElementById("points");
-const coinCount = document.getElementById("coinCount");
-const comboText = document.getElementById("combo");
-const levelNumber = document.getElementById("levelNumber");
-const best = document.getElementById("bestScore");
-const game = document.getElementById("game");
-const message = document.getElementById("message");
-const levelUp = document.getElementById("levelUp");
+let coins=0;
 
-let bestScore = Number(localStorage.getItem("bestScore")) || 0;
-best.textContent = bestScore;
+let bestScore=
+Number(localStorage.getItem("bestScore"))||0;
 
-const levels = [
+document.getElementById("bestScore").textContent=
+bestScore;
 
-["😀","😎"],
+const game=document.getElementById("game");
 
-["🐶","🐺"],
+const objects=[
 
-["🍎","🍏"],
+{emoji:"😀",type:"good"},
 
-["⚽","🏀"],
+{emoji:"💎",type:"coin"},
 
-["❤️","🩷"],
+{emoji:"⭐",type:"bonus"},
 
-["⭐","🌟"],
-
-["🚀","🛸"],
-
-["🟢","🔵"],
-
-["▲","△"],
-
-["■","□"],
-
-["1","7"],
-
-["O","0"]
+{emoji:"💣",type:"bomb"}
 
 ];
 
-newBoard();
+spawn();
 
-function newBoard(){
+setInterval(spawn,1200);
 
-game.innerHTML="";
+function spawn(){
 
-const pair=levels[
-(level-1)%levels.length
+const obj=
+objects[
+Math.floor(Math.random()*objects.length)
 ];
 
-const normal=pair[0];
-const odd=pair[1];
+const d=document.createElement("div");
 
-const oddIndex=Math.floor(Math.random()*25);
+d.className="target";
 
-for(let i=0;i<25;i++){
+d.textContent=obj.emoji;
 
-const cell=document.createElement("div");
+d.style.left=
+Math.random()*(window.innerWidth-60)+"px";
 
-cell.className="cell";
+d.style.top=
+120+Math.random()*(window.innerHeight-180)+"px";
 
-if(i===oddIndex){
+game.appendChild(d);
 
-cell.textContent=odd;
+d.onclick=function(){
 
-cell.onclick=correct;
-
-}else{
-
-cell.textContent=normal;
-
-cell.onclick=wrong;
-
-}
-
-game.appendChild(cell);
-
-}
-
-}
-
-function correct(){
+if(obj.type==="good"){
 
 score++;
 
-coins++;
+}
 
-combo++;
+if(obj.type==="coin"){
 
-points.textContent=score;
+coins+=10;
 
-coinCount.textContent=coins;
+}
 
-comboText.textContent="x"+combo;
+if(obj.type==="bonus"){
+
+score+=5;
+
+}
+
+if(obj.type==="bomb"){
+
+score=Math.max(0,score-5);
+
+}
+
+document.getElementById("points").textContent=score;
+
+document.getElementById("coinCount").textContent=coins;
 
 if(score>bestScore){
 
@@ -104,58 +83,19 @@ bestScore=score;
 
 localStorage.setItem("bestScore",bestScore);
 
-best.textContent=bestScore;
+document.getElementById("bestScore").textContent=
+bestScore;
 
 }
 
-if(score%5===0){
+d.remove();
 
-level++;
+};
 
-levelNumber.textContent=level;
+setTimeout(()=>{
 
-levelUp.textContent="LEVEL "+level;
+d.remove();
 
-levelUp.animate(
-
-[
-
-{opacity:0,transform:"translate(-50%,-50%) scale(.5)"},
-
-{opacity:1,transform:"translate(-50%,-50%) scale(1.3)"},
-
-{opacity:0,transform:"translate(-50%,-50%) scale(1)"}
-
-],
-
-{
-
-duration:1200
-
-}
-
-);
-
-}
-
-message.textContent="✅ Correct!";
-
-setTimeout(newBoard,300);
-
-}
-
-function wrong(){
-
-combo=1;
-
-comboText.textContent="x1";
-
-message.textContent="❌ Try Again";
-
-if(navigator.vibrate){
-
-navigator.vibrate(80);
-
-}
+},1800);
 
 }
