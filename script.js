@@ -2,191 +2,160 @@ let score = 0;
 let coins = 0;
 let combo = 1;
 let level = 1;
-let size = 40;
 
-const targets = [
-"😀","😎","🤖","👻",
-"🐶","🐱","🐼","🦁",
-"🍎","🍌","🍓","🍇",
-"⚽","🏀","🎾",
-"🚀","✈️","🚗",
-"❤️","⭐","💎","🪙",
-"₿","●","▲","■"
-];
-
-const circle = document.getElementById("circle");
 const points = document.getElementById("points");
 const coinCount = document.getElementById("coinCount");
 const comboText = document.getElementById("combo");
 const levelNumber = document.getElementById("levelNumber");
 const best = document.getElementById("bestScore");
-const plusOne = document.getElementById("plusOne");
+const game = document.getElementById("game");
+const message = document.getElementById("message");
 const levelUp = document.getElementById("levelUp");
-const themeBtn = document.getElementById("themeBtn");
 
 let bestScore = Number(localStorage.getItem("bestScore")) || 0;
 best.textContent = bestScore;
 
-let rainbowUnlocked =
-localStorage.getItem("rainbowUnlocked") === "true";
+const levels = [
 
-if(rainbowUnlocked){
+["😀","😎"],
 
-    themeBtn.textContent="✅ Rainbow Theme Unlocked";
+["🐶","🐺"],
 
-    startRainbow();
+["🍎","🍏"],
 
-}
+["⚽","🏀"],
 
-moveCircle();
+["❤️","🩷"],
 
-themeBtn.onclick=function(){
+["⭐","🌟"],
 
-    if(rainbowUnlocked){
+["🚀","🛸"],
 
-        alert("Already unlocked!");
+["🟢","🔵"],
 
-        return;
+["▲","△"],
 
-    }
+["■","□"],
 
-    if(coins<100){
+["1","7"],
 
-        alert("You need 100 coins!");
+["O","0"]
 
-        return;
+];
 
-    }
+newBoard();
 
-    coins-=100;
+function newBoard(){
 
-    coinCount.textContent=coins;
+game.innerHTML="";
 
-    rainbowUnlocked=true;
+const pair=levels[
+(level-1)%levels.length
+];
 
-    localStorage.setItem("rainbowUnlocked","true");
+const normal=pair[0];
+const odd=pair[1];
 
-    themeBtn.textContent="✅ Rainbow Theme Unlocked";
+const oddIndex=Math.floor(Math.random()*25);
 
-    startRainbow();
+for(let i=0;i<25;i++){
 
-};
+const cell=document.createElement("div");
 
-circle.onclick=function(){
+cell.className="cell";
 
-    score++;
-    coins++;
-    combo++;
+if(i===oddIndex){
 
-    points.textContent=score;
-    coinCount.textContent=coins;
-    comboText.textContent="🔥 Combo x"+combo;
+cell.textContent=odd;
 
-    plusOne.textContent="+1";
-    plusOne.style.left=circle.style.left;
-    plusOne.style.top=circle.style.top;
-    plusOne.style.opacity="1";
+cell.onclick=correct;
 
-    plusOne.animate(
-    [
-        {transform:"translateY(0px)",opacity:1},
-        {transform:"translateY(-60px)",opacity:0}
-    ],
-    {
-        duration:500
-    });
+}else{
 
-    setTimeout(()=>{
-        plusOne.style.opacity="0";
-    },500);
+cell.textContent=normal;
 
-    if(score>=level*10){
-
-        level++;
-
-        levelNumber.textContent=level;
-
-        levelUp.textContent="LEVEL "+level+"!";
-
-        levelUp.animate(
-        [
-            {
-                opacity:0,
-                transform:"translate(-50%,-50%) scale(.5)"
-            },
-            {
-                opacity:1,
-                transform:"translate(-50%,-50%) scale(1.3)"
-            },
-            {
-                opacity:0,
-                transform:"translate(-50%,-50%) scale(1)"
-            }
-        ],
-        {
-            duration:1200
-        });
-
-    }
-
-    if(score>bestScore){
-
-        bestScore=score;
-
-        localStorage.setItem("bestScore",bestScore);
-
-        best.textContent=bestScore;
-
-    }
-
-    if(navigator.vibrate){
-
-        navigator.vibrate(15);
-
-    }
-
-    createSpark();
-
-    size=Math.max(10,size-0.5);
-
-    circle.style.width=size+"px";
-    circle.style.height=size+"px";
-
-    moveCircle();
-
-};
-
-function moveCircle(){
-
-    const x=Math.random()*(window.innerWidth-size);
-
-    const y=Math.random()*(window.innerHeight-size);
-
-    circle.style.left=x+"px";
-
-    circle.style.top=y+"px";
-
-    const target=
-    targets[Math.floor(Math.random()*targets.length)];
-
-    circle.textContent=target;
-
-    if(target==="●"){
-
-        circle.style.background="white";
-
-    }else{
-
-        circle.style.background="transparent";
-
-    }
+cell.onclick=wrong;
 
 }
 
-function createSpark(){
+game.appendChild(cell);
 
-    for(let i=0;i<20;i++){
+}
 
-        const s=document.createElement("div");
+}
 
-        s.style.position="absolute
+function correct(){
+
+score++;
+
+coins++;
+
+combo++;
+
+points.textContent=score;
+
+coinCount.textContent=coins;
+
+comboText.textContent="x"+combo;
+
+if(score>bestScore){
+
+bestScore=score;
+
+localStorage.setItem("bestScore",bestScore);
+
+best.textContent=bestScore;
+
+}
+
+if(score%5===0){
+
+level++;
+
+levelNumber.textContent=level;
+
+levelUp.textContent="LEVEL "+level;
+
+levelUp.animate(
+
+[
+
+{opacity:0,transform:"translate(-50%,-50%) scale(.5)"},
+
+{opacity:1,transform:"translate(-50%,-50%) scale(1.3)"},
+
+{opacity:0,transform:"translate(-50%,-50%) scale(1)"}
+
+],
+
+{
+
+duration:1200
+
+}
+
+);
+
+}
+
+message.textContent="✅ Correct!";
+
+setTimeout(newBoard,300);
+
+}
+
+function wrong(){
+
+combo=1;
+
+comboText.textContent="x1";
+
+message.textContent="❌ Try Again";
+
+if(navigator.vibrate){
+
+navigator.vibrate(80);
+
+}
+
+}
