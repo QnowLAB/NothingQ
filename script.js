@@ -1,211 +1,254 @@
+const game = document.getElementById("game");
+
+const points = document.getElementById("points");
+const coinCount = document.getElementById("coinCount");
+const bestScoreText = document.getElementById("bestScore");
+const levelNumber = document.getElementById("levelNumber");
+const comboText = document.getElementById("combo");
+
+const plusOne = document.getElementById("plusOne");
+const levelUp = document.getElementById("levelUp");
+
 let score = 0;
 let coins = 0;
 let combo = 1;
 let level = 1;
-let size = 40;
+
+let bestScore =
+Number(localStorage.getItem("bestScore")) || 0;
+
+bestScoreText.textContent = bestScore;
 
 const targets = [
-    {icon:"😀",points:1},
-    {icon:"⭐",points:5},
-    {icon:"💎",points:20},
-    {icon:"👑",points:50},
-    {icon:"💣",points:-10},
-    {icon:"❤️",points:0},
-    {icon:"🪙",points:2},
-    {icon:"⚡",points:3}
+
+{icon:"😀",points:1},
+{icon:"⭐",points:5},
+{icon:"💎",points:20},
+{icon:"👑",points:50},
+{icon:"🪙",points:2},
+{icon:"⚡",points:3},
+{icon:"❤️",points:0},
+{icon:"💣",points:-10}
+
 ];
 
-const levelUp = document.getElementById("levelUp");
-const plusOne = document.getElementById("plusOne");
-const circle = document.getElementById("circle");
-const points = document.getElementById("points");
-const coinCount = document.getElementById("coinCount");
-const comboText = document.getElementById("combo");
-const levelNumber = document.getElementById("levelNumber");
-const best = document.getElementById("bestScore");
+const target = document.createElement("div");
 
-let bestScore = Number(localStorage.getItem("bestScore")) || 0;
-best.textContent = bestScore;
+target.className="target";
 
-let currentTarget;
+game.appendChild(target);
 
-moveCircle();
+let current;
 
-let autoMove = setInterval(moveCircle,1000);
+moveTarget();
 
-circle.onclick = function(){
+let speed = 1000;
 
-    if(currentTarget.points>0){
+let timer = setInterval(moveTarget,speed);
 
-        score += currentTarget.points;
-        coins += currentTarget.points;
+function moveTarget(){
 
-    }else if(currentTarget.icon==="💣"){
+const x =
+Math.random()*(window.innerWidth-70);
 
-        coins=Math.max(0,coins-10);
+const y =
+120+Math.random()*(window.innerHeight-220);
 
-    }else if(currentTarget.icon==="❤️"){
+target.style.left=x+"px";
+target.style.top=y+"px";
 
-        combo+=5;
+current =
+targets[Math.floor(Math.random()*targets.length)];
 
-    }
+target.textContent=current.icon;
 
-    combo++;
+}
 
-    plusOne.textContent =
-        (currentTarget.points>0)?
-        "+"+currentTarget.points:
-        currentTarget.icon;
+target.onclick=function(){
 
-    plusOne.style.left=circle.style.left;
-    plusOne.style.top=circle.style.top;
-    plusOne.style.opacity="1";
+if(current.points>0){
 
-    plusOne.animate(
-    [
-        {transform:"translateY(0px)",opacity:1},
-        {transform:"translateY(-60px)",opacity:0}
-    ],
-    {
-        duration:500
-    });
+score+=current.points;
+coins+=current.points;
 
-    setTimeout(()=>{
-        plusOne.style.opacity="0";
-    },500);
+showFloat("+"+current.points);
 
-    while(score>=level*25){
+}
 
-        level++;
+else if(current.icon==="💣"){
 
-        levelNumber.textContent=level;
+coins=Math.max(0,coins-10);
 
-        levelUp.textContent="LEVEL "+level+"!";
+showFloat("-10");
 
-        levelUp.animate(
-        [
-            {opacity:0,transform:"translate(-50%,-50%) scale(.5)"},
-            {opacity:1,transform:"translate(-50%,-50%) scale(1.3)"},
-            {opacity:0,transform:"translate(-50%,-50%) scale(1)"}
-        ],
-        {
-            duration:1200
-        });
+}
 
-        clearInterval(autoMove);
+else if(current.icon==="❤️"){
 
-        let speed=Math.max(250,1000-level*50);
+combo+=5;
 
-        autoMove=setInterval(moveCircle,speed);
+showFloat("❤️");
 
-    }
+}
 
-    points.textContent=score;
-    coinCount.textContent=coins;
-    comboText.textContent="🔥 Combo x"+combo;
+combo++;
 
-    if(score>bestScore){
+points.textContent=score;
+coinCount.textContent=coins;
+comboText.textContent="x"+combo;
 
-        bestScore=score;
+if(score>bestScore){
 
-        localStorage.setItem("bestScore",bestScore);
+bestScore=score;
 
-        best.textContent=bestScore;
+localStorage.setItem(
+"bestScore",
+bestScore
+);
 
-    }
+bestScoreText.textContent=bestScore;
 
-    if(navigator.vibrate){
+}
 
-        navigator.vibrate(15);
+while(score>=level*25){
 
-    }
+level++;
 
-    createSpark();
+levelNumber.textContent=level;
 
-    size=Math.max(18,size-0.3);
+speed=Math.max(250,speed-70);
 
-    circle.style.width=size+"px";
-    circle.style.height=size+"px";
+clearInterval(timer);
 
-    moveCircle();
+timer=setInterval(moveTarget,speed);
+
+levelUp.textContent=
+"LEVEL "+level+"!";
+
+levelUp.animate(
+
+[
+{
+opacity:0,
+transform:"translate(-50%,-50%) scale(.5)"
+},
+
+{
+opacity:1,
+transform:"translate(-50%,-50%) scale(1.4)"
+},
+
+{
+opacity:0,
+transform:"translate(-50%,-50%) scale(1)"
+}
+
+],
+
+{
+duration:1200
+}
+
+);
+
+}
+
+if(navigator.vibrate){
+
+navigator.vibrate(20);
+
+}
+
+createSpark();
+
+moveTarget();
 
 };
 
-function moveCircle(){
+function showFloat(text){
 
-    const x=Math.random()*(window.innerWidth-size);
+plusOne.textContent=text;
 
-    const y=Math.random()*(window.innerHeight-size);
+plusOne.style.left=target.style.left;
 
-    circle.style.left=x+"px";
-    circle.style.top=y+"px";
+plusOne.style.top=target.style.top;
 
-    currentTarget=
-    targets[Math.floor(Math.random()*targets.length)];
+plusOne.animate(
 
-    circle.textContent=currentTarget.icon;
+[
+{
+transform:"translateY(0px)",
+opacity:1
+},
 
-    circle.style.background="transparent";
-    circle.style.boxShadow="0 0 25px rgba(255,255,255,.6)";
+{
+transform:"translateY(-60px)",
+opacity:0
+}
+
+],
+
+{
+duration:500
+}
+
+);
 
 }
 
 function createSpark(){
 
-    for(let i=0;i<20;i++){
+for(let i=0;i<18;i++){
 
-        const s=document.createElement("div");
+const s=document.createElement("div");
 
-        s.style.position="absolute";
-        s.style.left=circle.style.left;
-        s.style.top=circle.style.top;
-        s.style.width="8px";
-        s.style.height="8px";
-        s.style.borderRadius="50%";
+s.className="spark";
 
-        s.style.background=
-        "hsl("+Math.random()*360+",100%,60%)";
+s.style.left=target.style.left;
 
-        document.body.appendChild(s);
+s.style.top=target.style.top;
 
-        const angle=Math.random()*360;
+s.style.background=
+"hsl("+Math.random()*360+",100%,60%)";
 
-        const distance=40+Math.random()*80;
+document.body.appendChild(s);
 
-        s.animate(
+const angle=Math.random()*360;
 
-        [
+const distance=30+Math.random()*60;
 
-        {
-            transform:"translate(0,0)",
-            opacity:1
-        },
+s.animate(
 
-        {
+[
+{
+transform:"translate(0,0)",
+opacity:1
+},
 
-            transform:
-            "translate("
-            +(Math.cos(angle*Math.PI/180)*distance)
-            +"px,"
-            +(Math.sin(angle*Math.PI/180)*distance)
-            +"px)",
+{
+transform:
+"translate("
++(Math.cos(angle*Math.PI/180)*distance)
++"px,"
++(Math.sin(angle*Math.PI/180)*distance)
++"px)",
+opacity:0
+}
 
-            opacity:0
+],
 
-        }
+{
+duration:500
+}
 
-        ],
+);
 
-        {
-            duration:500
-        });
+setTimeout(()=>{
 
-        setTimeout(()=>{
+s.remove();
 
-            s.remove();
+},500);
 
-        },500);
-
-    }
+}
 
 }
