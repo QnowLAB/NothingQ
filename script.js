@@ -4,6 +4,8 @@ let combo = 1;
 let level = 1;
 let size = 40;
 
+
+const plusOne = document.getElementById("plusOne");
 const circle = document.getElementById("circle");
 const points = document.getElementById("points");
 const coinCount = document.getElementById("coinCount");
@@ -19,6 +21,19 @@ moveCircle();
 circle.onclick = function () {
 
     score++;
+plusOne.textContent="+1";
+
+plusOne.style.left=circle.style.left;
+plusOne.style.top=circle.style.top;
+
+plusOne.animate(
+[
+ {transform:"translateY(0px)",opacity:1},
+ {transform:"translateY(-60px)",opacity:0}
+],
+{
+ duration:500
+});
     coins++;
     combo++;
 
@@ -47,10 +62,15 @@ circle.onclick = function () {
     circle.style.width = size + "px";
     circle.style.height = size + "px";
 
-    circle.style.background =
-        "hsl(" + Math.random() * 360 + ",100%,60%)";
+    const hue=Math.random()*360;
 
-    moveCircle();
+circle.style.background=
+"hsl("+hue+",100%,60%)";
+
+circle.style.boxShadow=
+"0 0 35px hsl("+hue+",100%,70%)";
+
+    setTimeout(moveCircle,Math.max(120,600-level*20));
 };
 
 function moveCircle() {
