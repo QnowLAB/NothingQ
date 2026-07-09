@@ -28,17 +28,18 @@ plusOne.style.top=circle.style.top;
 plusOne.style.opacity = "1";
 
 plusOne.animate(
+[
+    { transform: "translateY(0px)", opacity: 1 },
+    { transform: "translateY(-60px)", opacity: 0 }
+],
+{
+    duration: 500
+});
+
 setTimeout(() => {
     plusOne.style.opacity = "0";
 }, 500);
 
-[
- {transform:"translateY(0px)",opacity:1},
- {transform:"translateY(-60px)",opacity:0}
-],
-{
- duration:500
-});
     coins++;
     combo++;
 
