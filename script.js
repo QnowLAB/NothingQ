@@ -80,6 +80,7 @@ levelUp.animate(
 
     if (navigator.vibrate) {
         navigator.vibrate(15);
+createSpark();
     }
 
     size = Math.max(10, size - 0.5);
@@ -107,4 +108,64 @@ function moveCircle() {
     circle.style.top = y + "px";
 circle.textContent =
 targets[Math.floor(Math.random()*targets.length)];
+}
+
+function createSpark(){
+
+for(let i=0;i<8;i++){
+
+const s=document.createElement("div");
+
+s.style.position="absolute";
+
+s.style.left=circle.style.left;
+
+s.style.top=circle.style.top;
+
+s.style.width="8px";
+
+s.style.height="8px";
+
+s.style.borderRadius="50%";
+
+s.style.background=
+"hsl("+Math.random()*360+",100%,60%)";
+
+document.body.appendChild(s);
+
+const angle=Math.random()*360;
+
+const distance=30+Math.random()*40;
+
+s.animate([
+
+{
+transform:"translate(0,0)",
+opacity:1
+},
+
+{
+transform:
+"translate("
++(Math.cos(angle*Math.PI/180)*distance)
++"px,"
++(Math.sin(angle*Math.PI/180)*distance)
++"px)",
+
+opacity:0
+
+}
+
+],{
+
+duration:500
+
+});
+
+setTimeout(()=>{
+s.remove();
+},500);
+
+}
+
 }
