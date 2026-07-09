@@ -5,39 +5,87 @@ let level = 1;
 let size = 40;
 
 const targets = [
-    "😀","😎","🤖","👻",
-    "🐶","🐱","🐼","🦁",
-    "🍎","🍌","🍓","🍇",
-    "⚽","🏀","🎾",
-    "🚀","✈️","🚗",
-    "❤️","⭐","💎","🪙",
-    "₿","●","▲","■"
+"😀","😎","🤖","👻",
+"🐶","🐱","🐼","🦁",
+"🍎","🍌","🍓","🍇",
+"⚽","🏀","🎾",
+"🚀","✈️","🚗",
+"❤️","⭐","💎","🪙",
+"₿","●","▲","■"
 ];
 
-const levelUp = document.getElementById("levelUp");
-const plusOne = document.getElementById("plusOne");
 const circle = document.getElementById("circle");
 const points = document.getElementById("points");
 const coinCount = document.getElementById("coinCount");
 const comboText = document.getElementById("combo");
 const levelNumber = document.getElementById("levelNumber");
 const best = document.getElementById("bestScore");
+const plusOne = document.getElementById("plusOne");
+const levelUp = document.getElementById("levelUp");
+const themeBtn = document.getElementById("themeBtn");
 
 let bestScore = Number(localStorage.getItem("bestScore")) || 0;
 best.textContent = bestScore;
 
+let rainbowUnlocked =
+localStorage.getItem("rainbowUnlocked") === "true";
+
+if(rainbowUnlocked){
+
+    themeBtn.textContent="✅ Rainbow Theme Unlocked";
+
+    startRainbow();
+
+}
+
 moveCircle();
 
-circle.onclick = function(){
+themeBtn.onclick=function(){
+
+    if(rainbowUnlocked){
+
+        alert("Already unlocked!");
+
+        return;
+
+    }
+
+    if(coins<100){
+
+        alert("You need 100 coins!");
+
+        return;
+
+    }
+
+    coins-=100;
+
+    coinCount.textContent=coins;
+
+    rainbowUnlocked=true;
+
+    localStorage.setItem("rainbowUnlocked","true");
+
+    themeBtn.textContent="✅ Rainbow Theme Unlocked";
+
+    startRainbow();
+
+};
+
+circle.onclick=function(){
 
     score++;
     coins++;
     combo++;
 
-    plusOne.textContent = "+1";
-    plusOne.style.left = circle.style.left;
-    plusOne.style.top = circle.style.top;
-    plusOne.style.opacity = "1";
+    points.textContent=score;
+    coinCount.textContent=coins;
+    comboText.textContent="🔥 Combo x"+combo;
+
+    plusOne.textContent="+1";
+    plusOne.style.left=circle.style.left;
+    plusOne.style.top=circle.style.top;
+    plusOne.style.opacity="1";
 
     plusOne.animate(
     [
@@ -55,6 +103,7 @@ circle.onclick = function(){
     if(score>=level*10){
 
         level++;
+
         levelNumber.textContent=level;
 
         levelUp.textContent="LEVEL "+level+"!";
@@ -63,7 +112,7 @@ circle.onclick = function(){
         [
             {
                 opacity:0,
-                transform:"translate(-50%,-50%) scale(0.5)"
+                transform:"translate(-50%,-50%) scale(.5)"
             },
             {
                 opacity:1,
@@ -80,20 +129,20 @@ circle.onclick = function(){
 
     }
 
-    points.textContent=score;
-    coinCount.textContent=coins;
-    comboText.textContent="🔥 Combo x"+combo;
-
     if(score>bestScore){
 
         bestScore=score;
+
         localStorage.setItem("bestScore",bestScore);
+
         best.textContent=bestScore;
 
     }
 
     if(navigator.vibrate){
+
         navigator.vibrate(15);
+
     }
 
     createSpark();
@@ -114,11 +163,11 @@ function moveCircle(){
     const y=Math.random()*(window.innerHeight-size);
 
     circle.style.left=x+"px";
+
     circle.style.top=y+"px";
 
-    const target=targets[
-        Math.floor(Math.random()*targets.length)
-    ];
+    const target=
+    targets[Math.floor(Math.random()*targets.length)];
 
     circle.textContent=target;
 
@@ -132,8 +181,6 @@ function moveCircle(){
 
     }
 
-    circle.style.boxShadow="0 0 20px rgba(255,255,255,.6)";
-
 }
 
 function createSpark(){
@@ -142,48 +189,4 @@ function createSpark(){
 
         const s=document.createElement("div");
 
-        s.style.position="absolute";
-        s.style.left=circle.style.left;
-        s.style.top=circle.style.top;
-
-        s.style.width="8px";
-        s.style.height="8px";
-
-        s.style.borderRadius="50%";
-
-        s.style.background=
-        "hsl("+Math.random()*360+",100%,60%)";
-
-        document.body.appendChild(s);
-
-        const angle=Math.random()*360;
-        const distance=40+Math.random()*80;
-
-        s.animate(
-        [
-            {
-                transform:"translate(0,0)",
-                opacity:1
-            },
-            {
-                transform:
-                "translate("
-                +(Math.cos(angle*Math.PI/180)*distance)
-                +"px,"
-                +(Math.sin(angle*Math.PI/180)*distance)
-                +"px)",
-
-                opacity:0
-            }
-        ],
-        {
-            duration:500
-        });
-
-        setTimeout(()=>{
-            s.remove();
-        },500);
-
-    }
-
-}
+        s.style.position="absolute
