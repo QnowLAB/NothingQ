@@ -105,4 +105,6 @@ function moveCircle() {
 
     circle.style.left = x + "px";
     circle.style.top = y + "px";
+circle.textContent =
+targets[Math.floor(Math.random()*targets.length)];
 }
