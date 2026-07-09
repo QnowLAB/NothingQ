@@ -4,7 +4,7 @@ let combo = 1;
 let level = 1;
 let size = 40;
 
-
+const levelUp = document.getElementById("levelUp");
 const plusOne = document.getElementById("plusOne");
 const circle = document.getElementById("circle");
 const points = document.getElementById("points");
@@ -46,7 +46,17 @@ setTimeout(() => {
     if (score >= level * 10) {
         level++;
         levelNumber.textContent = level;
-        alert("Level " + level + "!");
+        levelUp.textContent = "LEVEL " + level + "!";
+
+levelUp.animate(
+[
+    { opacity:0, transform:"translate(-50%,-50%) scale(0.5)" },
+    { opacity:1, transform:"translate(-50%,-50%) scale(1.3)" },
+    { opacity:0, transform:"translate(-50%,-50%) scale(1)" }
+],
+{
+    duration:1200
+});
     }
 
     points.textContent = score;
