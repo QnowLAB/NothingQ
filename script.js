@@ -21,19 +21,28 @@ circle.addEventListener("click", () => {
         best.textContent = bestScore;
     }
 
+    // phone vibration
     if(navigator.vibrate){
-        navigator.vibrate(20);
+        navigator.vibrate(15);
     }
 
-    size = Math.max(10, size - 1);
+    // smaller every 10 points
+    if(score % 10 === 0){
+        size = Math.max(8, size - 2);
+    }
 
-    circle.style.width = size + "px";
-    circle.style.height = size + "px";
-
+    // random color
     circle.style.background =
-        "hsl(" + (Math.random()*360) + ",100%,60%)";
+        `hsl(${Math.random()*360},100%,60%)`;
 
-    createSpark();
+    // random shape
+    if(Math.random() < 0.5){
+        circle.style.borderRadius="50%";
+    }else{
+        circle.style.borderRadius="10%";
+    }
+
+    createFireworks();
 
     moveCircle();
 
@@ -42,38 +51,52 @@ circle.addEventListener("click", () => {
 function moveCircle(){
 
     const x = Math.random() * (window.innerWidth - size);
+
     const y = Math.random() * (window.innerHeight - size);
+
+    circle.style.width = size + "px";
+    circle.style.height = size + "px";
 
     circle.style.left = x + "px";
     circle.style.top = y + "px";
 
 }
 
-function createSpark(){
+function createFireworks(){
 
-    const s = document.createElement("div");
+    for(let i=0;i<8;i++){
 
-    s.style.position = "absolute";
-    s.style.left = circle.style.left;
-    s.style.top = circle.style.top;
-    s.style.width = "12px";
-    s.style.height = "12px";
-    s.style.borderRadius = "50%";
-    s.style.background = "yellow";
+        const p=document.createElement("div");
 
-    document.body.appendChild(s);
+        p.style.position="absolute";
+        p.style.left=circle.style.left;
+        p.style.top=circle.style.top;
+        p.style.width="8px";
+        p.style.height="8px";
+        p.style.borderRadius="50%";
 
-    s.animate(
-    [
-        {transform:"scale(1)",opacity:1},
-        {transform:"scale(8)",opacity:0}
-    ],
-    {
-        duration:400
-    });
+        p.style.background=
+        `hsl(${Math.random()*360},100%,60%)`;
 
-    setTimeout(()=>{
-        s.remove();
-    },400);
+        document.body.appendChild(p);
+
+        const angle=Math.random()*360;
+        const distance=40+Math.random()*40;
+
+        p.animate([
+            {transform:"translate(0,0)",opacity:1},
+            {
+             transform:
+             `translate(${Math.cos(angle*Math.PI/180)*distance}px,
+             ${Math.sin(angle*Math.PI/180)*distance}px)`,
+             opacity:0
+            }
+        ],{
+            duration:500
+        });
+
+        setTimeout(()=>p.remove(),500);
+
+    }
 
 }
