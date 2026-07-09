@@ -1,102 +1,93 @@
 let score = 0;
+
+let coins = 0;
+
+let combo = 1;
+
+let level = 1;
+
 let size = 40;
 
 const circle = document.getElementById("circle");
+
 const points = document.getElementById("points");
+
+const coinCount = document.getElementById("coinCount");
+
+const comboText = document.getElementById("combo");
+
+const levelNumber = document.getElementById("levelNumber");
+
 const best = document.getElementById("bestScore");
 
 let bestScore = localStorage.getItem("bestScore") || 0;
+
 best.textContent = bestScore;
 
 moveCircle();
 
-circle.addEventListener("click", () => {
+circle.onclick=function(){
 
-    score++;
-    points.textContent = score;
+score++;
 
-    if(score > bestScore){
-        bestScore = score;
-        localStorage.setItem("bestScore", bestScore);
-        best.textContent = bestScore;
-    }
+coins++;
 
-    // phone vibration
-    if(navigator.vibrate){
-        navigator.vibrate(15);
-    }
+combo++;
 
-    // smaller every 10 points
-    if(score % 10 === 0){
-        size = Math.max(8, size - 2);
-    }
+if(score>=level*10){
 
-    // random color
-    circle.style.background =
-        `hsl(${Math.random()*360},100%,60%)`;
+level++;
 
-    // random shape
-    if(Math.random() < 0.5){
-        circle.style.borderRadius="50%";
-    }else{
-        circle.style.borderRadius="10%";
-    }
+levelNumber.textContent=level;
 
-    createFireworks();
-
-    moveCircle();
-
-});
-
-function moveCircle(){
-
-    const x = Math.random() * (window.innerWidth - size);
-
-    const y = Math.random() * (window.innerHeight - size);
-
-    circle.style.width = size + "px";
-    circle.style.height = size + "px";
-
-    circle.style.left = x + "px";
-    circle.style.top = y + "px";
+alert("🎉 Level "+level);
 
 }
 
-function createFireworks(){
+points.textContent=score;
 
-    for(let i=0;i<8;i++){
+coinCount.textContent=coins;
 
-        const p=document.createElement("div");
+comboText.textContent="🔥 Combo x"+combo;
 
-        p.style.position="absolute";
-        p.style.left=circle.style.left;
-        p.style.top=circle.style.top;
-        p.style.width="8px";
-        p.style.height="8px";
-        p.style.borderRadius="50%";
+if(score>bestScore){
 
-        p.style.background=
-        `hsl(${Math.random()*360},100%,60%)`;
+bestScore=score;
 
-        document.body.appendChild(p);
+localStorage.setItem("bestScore",bestScore);
 
-        const angle=Math.random()*360;
-        const distance=40+Math.random()*40;
+best.textContent=bestScore;
 
-        p.animate([
-            {transform:"translate(0,0)",opacity:1},
-            {
-             transform:
-             `translate(${Math.cos(angle*Math.PI/180)*distance}px,
-             ${Math.sin(angle*Math.PI/180)*distance}px)`,
-             opacity:0
-            }
-        ],{
-            duration:500
-        });
+}
 
-        setTimeout(()=>p.remove(),500);
+if(navigator.vibrate){
 
-    }
+navigator.vibrate(15);
+
+}
+
+size=Math.max(10,size-0.5);
+
+circle.style.width=size+"px";
+
+circle.style.height=size+"px";
+
+circle.style.background=
+
+`hsl(${Math.random()*360},100%,60%)`;
+
+moveCircle();
+
+};
+
+function moveCircle(){
+
+const x=Math.random()*(window.innerWidth-size);
+
+const y=Math.random()*(window.innerHeight-size);
+
+circle.style.left=x+"px";
+
+circle.style.top=y+"px";
 
 }
