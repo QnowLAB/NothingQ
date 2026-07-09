@@ -68,3 +68,16 @@ transition:.15s;
 box-shadow:0 0 25px white;
 
 }
+
+#levelUp{
+    position:fixed;
+    top:45%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:48px;
+    font-weight:bold;
+    color:gold;
+    text-shadow:0 0 25px gold;
+    opacity:0;
+    pointer-events:none;
+}
