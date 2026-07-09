@@ -5,14 +5,15 @@ let level = 1;
 let size = 40;
 
 const targets = [
-"😀","😎","🤖","👻",
-"🐶","🐱","🐼","🦁",
-"🍎","🍌","🍓","🍇",
-"⚽","🏀","🎾",
-"🚀","✈️","🚗",
-"❤️","⭐","💎","🪙",
-"₿","●","▲","■"
+    "😀","😎","🤖","👻",
+    "🐶","🐱","🐼","🦁",
+    "🍎","🍌","🍓","🍇",
+    "⚽","🏀","🎾",
+    "🚀","✈️","🚗",
+    "❤️","⭐","💎","🪙",
+    "₿","●","▲","■"
 ];
+
 const levelUp = document.getElementById("levelUp");
 const plusOne = document.getElementById("plusOne");
 const circle = document.getElementById("circle");
@@ -27,157 +28,162 @@ best.textContent = bestScore;
 
 moveCircle();
 
-circle.onclick = function () {
+circle.onclick = function(){
 
     score++;
-plusOne.textContent="+1";
-
-plusOne.style.left=circle.style.left;
-plusOne.style.top=circle.style.top;
-plusOne.style.opacity = "1";
-
-plusOne.animate(
-[
-    { transform: "translateY(0px)", opacity: 1 },
-    { transform: "translateY(-60px)", opacity: 0 }
-],
-{
-    duration: 500
-});
-
-setTimeout(() => {
-    plusOne.style.opacity = "0";
-}, 500);
-
     coins++;
     combo++;
 
-    if (score >= level * 10) {
+    plusOne.textContent = "+1";
+    plusOne.style.left = circle.style.left;
+    plusOne.style.top = circle.style.top;
+    plusOne.style.opacity = "1";
+
+    plusOne.animate(
+    [
+        {transform:"translateY(0px)",opacity:1},
+        {transform:"translateY(-60px)",opacity:0}
+    ],
+    {
+        duration:500
+    });
+
+    setTimeout(()=>{
+        plusOne.style.opacity="0";
+    },500);
+
+    if(score>=level*10){
+
         level++;
-        levelNumber.textContent = level;
-        levelUp.textContent = "LEVEL " + level + "!";
+        levelNumber.textContent=level;
 
-levelUp.animate(
-[
-    { opacity:0, transform:"translate(-50%,-50%) scale(0.5)" },
-    { opacity:1, transform:"translate(-50%,-50%) scale(1.3)" },
-    { opacity:0, transform:"translate(-50%,-50%) scale(1)" }
-],
-{
-    duration:1200
-});
+        levelUp.textContent="LEVEL "+level+"!";
+
+        levelUp.animate(
+        [
+            {
+                opacity:0,
+                transform:"translate(-50%,-50%) scale(0.5)"
+            },
+            {
+                opacity:1,
+                transform:"translate(-50%,-50%) scale(1.3)"
+            },
+            {
+                opacity:0,
+                transform:"translate(-50%,-50%) scale(1)"
+            }
+        ],
+        {
+            duration:1200
+        });
+
     }
 
-    points.textContent = score;
-    coinCount.textContent = coins;
-    comboText.textContent = "Combo x" + combo;
+    points.textContent=score;
+    coinCount.textContent=coins;
+    comboText.textContent="🔥 Combo x"+combo;
 
-    if (score > bestScore) {
-        bestScore = score;
-        localStorage.setItem("bestScore", bestScore);
-        best.textContent = bestScore;
+    if(score>bestScore){
+
+        bestScore=score;
+        localStorage.setItem("bestScore",bestScore);
+        best.textContent=bestScore;
+
     }
 
-    if (navigator.vibrate) {
-    navigator.vibrate(15);
-}
+    if(navigator.vibrate){
+        navigator.vibrate(15);
+    }
 
-createSpark();
+    createSpark();
 
-    size = Math.max(10, size - 0.5);
+    size=Math.max(10,size-0.5);
 
-    circle.style.width = size + "px";
-    circle.style.height = size + "px";
+    circle.style.width=size+"px";
+    circle.style.height=size+"px";
 
-    const hue=Math.random()*360;
+    moveCircle();
 
-circle.style.background=
-"hsl("+hue+",100%,60%)";
-
-circle.style.boxShadow=
-"0 0 35px hsl("+hue+",100%,70%)";
-
-    setTimeout(moveCircle,Math.max(120,600-level*20));
 };
 
-function moveCircle() {
+function moveCircle(){
 
-    const x = Math.random() * (window.innerWidth - size);
-    const y = Math.random() * (window.innerHeight - size);
+    const x=Math.random()*(window.innerWidth-size);
 
-    circle.style.left = x + "px";
-    circle.style.top = y + "px";
-const target =
-targets[Math.floor(Math.random()*targets.length)];
+    const y=Math.random()*(window.innerHeight-size);
 
-circle.textContent = target;
+    circle.style.left=x+"px";
+    circle.style.top=y+"px";
 
-if(target==="●"){
-    circle.style.background="white";
-}
-else{
-    circle.style.background="transparent";
-}
+    const target=targets[
+        Math.floor(Math.random()*targets.length)
+    ];
 
-circle.style.boxShadow="none";
+    circle.textContent=target;
+
+    if(target==="●"){
+
+        circle.style.background="white";
+
+    }else{
+
+        circle.style.background="transparent";
+
+    }
+
+    circle.style.boxShadow="0 0 20px rgba(255,255,255,.6)";
+
 }
 
 function createSpark(){
 
-for(let i=0;i<20;i++)
+    for(let i=0;i<20;i++){
 
-const s=document.createElement("div");
+        const s=document.createElement("div");
 
-s.style.position="absolute";
+        s.style.position="absolute";
+        s.style.left=circle.style.left;
+        s.style.top=circle.style.top;
 
-s.style.left=circle.style.left;
+        s.style.width="8px";
+        s.style.height="8px";
 
-s.style.top=circle.style.top;
+        s.style.borderRadius="50%";
 
-s.style.width="8px";
+        s.style.background=
+        "hsl("+Math.random()*360+",100%,60%)";
 
-s.style.height="8px";
+        document.body.appendChild(s);
 
-s.style.borderRadius="50%";
+        const angle=Math.random()*360;
+        const distance=40+Math.random()*80;
 
-s.style.background=
-"hsl("+Math.random()*360+",100%,60%)";
+        s.animate(
+        [
+            {
+                transform:"translate(0,0)",
+                opacity:1
+            },
+            {
+                transform:
+                "translate("
+                +(Math.cos(angle*Math.PI/180)*distance)
+                +"px,"
+                +(Math.sin(angle*Math.PI/180)*distance)
+                +"px)",
 
-document.body.appendChild(s);
+                opacity:0
+            }
+        ],
+        {
+            duration:500
+        });
 
-const angle=Math.random()*360;
+        setTimeout(()=>{
+            s.remove();
+        },500);
 
-const distance=40+Math.random()*80;
-
-s.animate([
-
-{
-transform:"translate(0,0)",
-opacity:1
-},
-
-{
-transform:
-"translate("
-+(Math.cos(angle*Math.PI/180)*distance)
-+"px,"
-+(Math.sin(angle*Math.PI/180)*distance)
-+"px)",
-
-opacity:0
-
-}
-
-],{
-
-duration:500
-
-});
-
-setTimeout(()=>{
-s.remove();
-},500);
-
-}
+    }
 
 }
