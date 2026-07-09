@@ -4,6 +4,15 @@ let combo = 1;
 let level = 1;
 let size = 40;
 
+const targets = [
+"😀","😎","🤖","👻",
+"🐶","🐱","🐼","🦁",
+"🍎","🍌","🍓","🍇",
+"⚽","🏀","🎾",
+"🚀","✈️","🚗",
+"❤️","⭐","💎","🪙",
+"₿","●","▲","■"
+];
 const levelUp = document.getElementById("levelUp");
 const plusOne = document.getElementById("plusOne");
 const circle = document.getElementById("circle");
