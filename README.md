@@ -8,23 +8,31 @@ Find the Impossible
 
 **V3.1 – Lives System**
 
-### New Features in V3.1
-- ❤️ Lives system (start with 3 lives)
-- Game Over modal with final stats
-- Restart button (preserves Best Score)
-- UI improvements and polish
-- Bug fixes for target miss detection
-- Updated slogan: "Nothing is Impossible"
+A fast-paced emoji clicking game with lives, levels, and endless challenge.
 
-### All Features
-- Levels & progression
-- Coins collection
-- Best Score tracking
-- Emoji targets with point values
-- Particle effects & animations
-- Combo system
-- Vibration feedback on mobile
-- Lives system with Game Over state
+🎮 **[Play Now](https://qnowlab.github.io/NothingQ/)**
+
+---
+
+## Quick Start
+
+Click the emoji targets as fast as you can. Avoid missing targets and bombs. Reach higher levels for speed challenges.
+
+### Key Features
+- ❤️ 3 lives to survive
+- 🏆 Score and Best Score tracking
+- 🪙 Coins collection
+- 📈 Level progression
+- 🔥 Combo multiplier
+- ✨ Particle effects
+
+---
+
+## Documentation
+
+- 📋 **[Roadmap](PLAN.md)** – Future versions and features
+- 📝 **[Changelog](CHANGELOG.md)** – Complete version history
+- 🤖 **[Copilot Instructions](.github/copilot-instructions.md)** – Development guidelines
 
 ---
 
@@ -37,27 +45,15 @@ Find the Impossible
 | **V2** | — | Levels and Coins |
 | **V1** | — | First Prototype |
 
----
-
-## Play
-
-🎮 **Live Game**: https://qnowlab.github.io/NothingQ/
+See [Releases](https://github.com/QnowLAB/NothingQ/releases) for detailed notes on each version.
 
 ---
 
 ## Built With
 
 - Vanilla HTML, CSS, JavaScript (no frameworks)
-- Lightweight and fast
-- Built entirely on a Samsung S23 Ultra by @QnowLAB
-
----
-
-## Development
-
-- 📋 [Roadmap & Feature Tracking](PLAN.md)
-- 🤖 [Copilot Instructions](/.github/copilot-instructions.md)
-- 📦 [Releases](https://github.com/QnowLAB/NothingQ/releases)
+- Lightweight and fast (~50KB total)
+- Built on a Samsung S23 Ultra by @QnowLAB
 
 ---
 
