@@ -1,3 +1,35 @@
+# NothingQ Roadmap
+
+## Released
+✅ V1
+✅ V2
+✅ V2.9 – First Fun Release
+
+## V3.1
+☐ Lives
+☐ Life Loss
+☐ Game Over
+☐ Restart
+☐ UI polish
+
+## V3.2
+☐ Shop
+☐ Coin spending
+☐ Unlocks
+
+## V3.3
+☐ Missions
+☐ Achievements
+
+## V4
+☐ Boss Mode
+☐ Daily Challenge
+☐ Themes
+☐ Sounds
+☐ PWA
+
+---
+
 # NothingQ Development Plan
 
 ## Current Version: V3.1
@@ -42,42 +74,19 @@
 - [ ] Coin multiplier upgrade
 - [ ] Shop balance and pricing
 
-### V3.3 - Enhanced Audio & Feedback
-- [ ] Sound effects for:
-  - [ ] Target click
-  - [ ] Level up
-  - [ ] Bomb hit
-  - [ ] Game over
-  - [ ] Coin collection
-- [ ] Background music (optional toggle)
-- [ ] Volume controls
-
-### V3.4 - Leaderboard & Streaks
-- [ ] Daily streak tracking
-- [ ] Weekly leaderboard (localStorage)
-- [ ] Best combo record
-- [ ] Fastest level achievement
+### V3.3 - Missions & Achievements
+- [ ] Mission system with objectives
 - [ ] Achievement badges
+- [ ] Unlock rewards
+- [ ] Progress tracking
+- [ ] Reward distribution
 
-### V3.5 - Advanced Targets
-- [ ] Rare targets with multipliers
-- [ ] Mini-games for bonus points
-- [ ] Timed power-ups
-- [ ] Negative targets (avoid)
-- [ ] Progressive difficulty scaling
-
-### V3.6 - Mobile Optimizations
-- [ ] Touch swipe mechanics
-- [ ] Gesture controls
-- [ ] Mobile-specific UI scaling
-- [ ] Landscape/portrait support
-- [ ] PWA support (installable)
-
-### V3.7 - Multiplayer (Future)
-- [ ] Local multiplayer mode
-- [ ] Turn-based gameplay
-- [ ] Competitive scoring
-- [ ] Split-screen support
+### V4 - Advanced Features
+- [ ] Boss Mode with special mechanics
+- [ ] Daily Challenge mode
+- [ ] Theme customization (dark/light/custom)
+- [ ] Sound effects and background music
+- [ ] PWA (Progressive Web App) support
 
 ---
 
