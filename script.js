@@ -23,6 +23,7 @@ let combo = 1;
 let level = 1;
 let lives = 3;
 let gameActive = true;
+let targetSet = false;
 
 let bestScore =
 Number(localStorage.getItem("bestScore")) || 0;
@@ -62,7 +63,8 @@ function moveTarget(){
   if(!gameActive) return;
 
   // Check if previous target was missed (not clicked)
-  if(current && gameActive){
+  // Only check after the first target has been set
+  if(targetSet && current){
     removeLive();
   }
 
@@ -79,6 +81,9 @@ function moveTarget(){
   targets[Math.floor(Math.random()*targets.length)];
 
   target.textContent=current.icon;
+  
+  // Mark that a target has been set
+  targetSet = true;
 
 }
 
@@ -307,6 +312,7 @@ function restartGame(){
   lives = 3;
   gameActive = true;
   speed = 1000;
+  targetSet = false;
 
   // Update UI
   points.textContent = score;
