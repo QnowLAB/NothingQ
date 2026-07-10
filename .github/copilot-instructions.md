@@ -2,76 +2,161 @@
 
 These instructions guide development of NothingQ to maintain code quality, performance, and consistency.
 
-## Core Principles
+---
 
-### Technology Stack
-- **Vanilla HTML, CSS, JavaScript ONLY**
-- No frameworks (React, Vue, Angular, etc.)
-- No external libraries or dependencies
+## Core Philosophy
+
+### Technology: Native First
+- **Prefer native browser APIs before adding dependencies**
+- Vanilla HTML, CSS, JavaScript only
+- No frameworks (React, Vue, Angular, Svelte, etc.)
+- No external libraries unless explicitly requested
 - Keep the game lightweight and fast
-- Minimize bundle size for quick load times
 
-### Code Quality
-- Write clean, well-commented code
-- Use meaningful variable and function names
-- Keep files organized and readable
-- Follow consistent formatting and indentation
-- One feature per commit with clear messages
+### Architecture
+- Keep the game playable directly from GitHub Pages
+- Do not require npm, build steps, or tooling unless explicitly requested
+- Deployable as static files
+- Works in any modern browser
 
-### Gameplay Preservation
-- **Never remove or break existing features** without explicit request
-- **Preserve all existing mechanics:** Score, Coins, Levels, Combo, Best Score, Particle effects, Emoji system, Vibration feedback, Lives system
-- When adding features, ensure they integrate smoothly with existing gameplay
-- Test thoroughly to avoid introducing regressions
+### Performance
+- Avoid unnecessary DOM updates
+- Reuse existing elements where practical
+- Prefer simple algorithms over complex abstractions
+- Target: 60fps gameplay, < 1s load time, < 50KB total
 
-## Development Workflow
+### Future Dependencies (Only When Requested)
+- V5 → online multiplayer (may require backend)
+- V6 → WebSockets (for multiplayer)
+- V7 → Three.js (if 3D graphics requested)
+- V8 → Phaser (if advanced game engine needed)
+- Electron (if desktop build requested)
 
-### Before Making Changes
-1. **Explain the plan** - Always explain what you're about to change and why
-2. **List files** - Clearly state which files will be modified
-3. **Preview changes** - Show the user what's being changed before committing
-4. **Get confirmation** - Wait for approval before applying changes
+Otherwise: **keep it vanilla.**
 
-### Making Changes
-- Edit existing code instead of rewriting files
-- Make surgical, focused changes
-- Add comments explaining significant logic
-- Keep commits small and atomic
-- Use clear commit messages
+---
 
-### After Changes
-- **Summarize changes** - Explain every modification made
-- **Verify gameplay** - Test the game works smoothly
-- **Verify persistence** - Ensure localStorage and scores work correctly
+## Before Any Task
+
+Determine current version by reading:
+1. `PLAN.md` – Check released versions
+2. `CHANGELOG.md` – Check latest changes
+
+**Do NOT** hard-code version numbers. Let documentation be the source of truth.
+
+---
+
+## Completion Checklist
+
+### Code Review
+Before considering any task complete, verify:
+
+**HTML**
+- [ ] Valid HTML syntax (no unclosed tags)
+- [ ] All IDs referenced in CSS and JavaScript exist
+- [ ] No duplicate IDs
+- [ ] Semantic HTML where appropriate
+
+**CSS**
+- [ ] Valid CSS syntax
+- [ ] No unused selectors
+- [ ] No conflicting rules
+- [ ] Responsive design maintained
+- [ ] No console errors from styling
+
+**JavaScript**
+- [ ] Valid JavaScript syntax (no syntax errors)
+- [ ] No console errors or warnings
+- [ ] All referenced DOM elements exist
+- [ ] All functions are called or exported
+- [ ] No duplicate functions or logic
+
+**General**
+- [ ] No unused variables
+- [ ] No commented-out code (unless explaining complex logic)
+- [ ] Duplicate logic eliminated
+- [ ] Variable/function names are meaningful
+- [ ] Comments explain "why", not "what"
+
+---
+
+## Bug Fixes
+
+When fixing bugs:
+
+1. **Identify root cause** – Explain why the bug existed
+2. **Minimal changes** – Change only what's necessary (usually 1-5 lines)
+3. **Preserve gameplay** – No feature changes, only fix behavior
+4. **Test thoroughly** – Verify the fix works and doesn't break anything else
+5. **Explain the fix** – Clear description of what was wrong and how it's fixed
+
+Example:
+```
+fix: Prevent double combo increment on heart emoji
+
+Root cause: combo++ was being called twice—once in the 
+else if block for ❤️, and again at the end of every click.
+
+Solution: Moved combo++ inside target-specific handlers
+instead of at the end. Now combo only increments once per click.
+
+Verified: Game plays normally, combo counts correctly.
+```
+
+---
 
 ## Release Workflow
 
-**Follow this process for each new version:**
+Follow this process for **every new version**:
 
-### 1. Development Phase
-- Implement the feature in its own branch or directly on main
-- Keep changes focused on one feature per version (e.g., V3.1 = Lives only)
-- Review code for syntax errors, logic bugs, and unused variables
-- Ask Copilot to review code before finalizing
+### 1. Development
+- Implement feature in focused, small commits
+- One feature per version (V3.2 = Shop only, not Shop + Missions)
+- Keep commits atomic and descriptive
 
-### 2. Testing Phase
+### 2. Code Review
+- Run through completion checklist above
+- Ask Copilot to review for syntax/logic errors
+- Fix any issues before proceeding
+
+### 3. Testing
 - Play-test the game yourself
 - Verify all existing features still work
-- Confirm new feature works as intended
+- Test new feature thoroughly
 - Check mobile touch responsiveness
-- Test localStorage persistence (Best Score)
+- Verify localStorage persistence
 
-### 3. Documentation Phase
-- Commit all changes with clear message
+### 4. Documentation Updates
 - Update `PLAN.md` – Mark feature complete (☐ → ✅)
-- Update `CHANGELOG.md` – Add section for new version
-- Update `README.md` – Change current version number
+- Update `CHANGELOG.md` – Add Added/Fixed/Changed sections
+- Update `README.md` – Change version number if major update
 
-### 4. Release Phase
-- Create Git tag: `git tag -a v3.1 -m "NothingQ V3.1 — Lives System"`
-- Push tag: `git push origin v3.1`
-- Create GitHub Release from tag with detailed release notes
-- Link to GitHub Release in any announcements
+### 5. Version Control
+- Commit with clear message: `feat: Add shop system`
+- Push to main branch
+
+### 6. Git Tag
+```bash
+git tag -a v3.2 -m "NothingQ V3.2 — Shop System"
+git push origin v3.2
+```
+
+### 7. GitHub Release
+- Create release from tag (use `RELEASE_TEMPLATE.md` as guide)
+- Write clear release notes
+- Link comparison: `[Compare v3.1...v3.2](url)`
+
+---
+
+## Version Requirements
+
+**Every completed version must include:**
+
+- ✅ PLAN.md updated (feature marked ✅ in Released section)
+- ✅ CHANGELOG.md updated (with Added/Fixed/Changed sections)
+- ✅ README.md updated (if version number shown)
+- ✅ Git tag created (`v3.2`, `v3.3`, etc.)
+- ✅ GitHub Release published with notes
 
 ---
 
@@ -79,116 +164,138 @@ These instructions guide development of NothingQ to maintain code quality, perfo
 
 ```
 NothingQ/
-├── README.md              # Project overview, quick start, links
-├── PLAN.md                # Future roadmap and planned features
-├── CHANGELOG.md           # Complete version history with changes
-├── index.html             # HTML structure and UI elements
-├── style.css              # Styling, animations, responsive design
-├── script.js              # Game logic, mechanics, state management
+├── README.md                    # Project overview, quick start
+├── PLAN.md                      # Future roadmap
+├── CHANGELOG.md                 # Version history
+├── CONTRIBUTING.md              # How to contribute
+├── RELEASE_TEMPLATE.md          # GitHub Release format
 ├── .github/
 │   └── copilot-instructions.md  # This file
-└── .gitignore (if needed)
+├── index.html                   # Game structure
+├── style.css                    # Game styling
+└── script.js                    # Game logic
 ```
 
 ### File Purposes
 
 **README.md**
-- Project overview and description
-- Quick start guide
-- Current version highlights
-- Links to other documentation
-- Version history table
-- Build info (built on Samsung S23 Ultra, etc.)
+- What is NothingQ?
+- How to play
+- Current version overview
+- Quick links to other docs
 
 **PLAN.md**
 - Released versions checklist
-- Upcoming versions with features to implement
-- Development guidelines and standards
+- Upcoming versions with features
+- Development guidelines
 - Performance targets
 - Design principles
 
 **CHANGELOG.md**
-- Complete history of all versions
-- What was added, fixed, changed in each version
+- Complete version history
+- What changed in each version
+- Added, Fixed, Changed sections per version
 - Release dates
-- Follows Keep a Changelog format
 
-**GitHub Releases**
-- Polished public announcements
-- Detailed release notes for each tag
-- Marketing-friendly descriptions
-- Comparison links (v2.9...v3.1)
-- Files changed and impact
+**CONTRIBUTING.md**
+- How to work on NothingQ
+- Development workflow
+- Testing guidelines
+- Release process for humans
+
+**RELEASE_TEMPLATE.md**
+- Template for GitHub Releases
+- Consistent format across all releases
+- Ensures nothing is forgotten
+
+**.github/copilot-instructions.md**
+- How Copilot should work on this project
+- Engineering principles and rules
+- Code standards and checklists
+- This file
 
 ---
 
 ## Versioning Strategy
 
-Small, focused releases make debugging easier and let players follow evolution:
+Small, focused releases make debugging easier and create meaningful milestones:
 
 - **V3.1** – Lives System ✅
 - **V3.2** – Shop System
-- **V3.3** – Missions & Achievements
-- **V3.4** – Achievements (if split from V3.3)
+- **V3.3** – Missions
+- **V3.4** – Achievements
 - **V3.5** – Boss Mode
 - **V3.6** – Daily Challenge
 - **V3.7** – Themes & Sounds
-- **V4.0** – Major milestone (PWA, polish, etc.)
+- **V4.0** – Major milestone
+- **V5+** – Consider major features (multiplayer, platforms, etc.)
 
 Each version is:
-- Small enough to ship quickly
+- Small enough to ship in days/week
 - Big enough to be meaningful
-- Tagged and released independently
-- Playable and tested
+- Independently testable
+- Tagged and released
+- Has playable, preserved code
 
 ---
 
 ## Feature Development
 
 ### When Adding Features
-1. Identify which version (V3.2, V3.3, etc.)
-2. Check PLAN.md for the feature status
-3. Explain the implementation approach before coding
-4. Make changes with clear comments
-5. Review code for errors
-6. Play-test thoroughly
-7. Update PLAN.md when complete (change ☐ to ✅)
-8. Update CHANGELOG.md with Added/Fixed sections
-9. Create Git tag and GitHub Release
+
+1. **Explain approach** – What will change? Which files?
+2. **Implement feature** – Focused commits, clear messages
+3. **Review code** – Use completion checklist above
+4. **Play-test** – Thoroughly test feature and existing gameplay
+5. **Update docs** – PLAN.md, CHANGELOG.md, README.md
+6. **Create tag** – `git tag -a v3.2 ...`
+7. **Publish release** – GitHub Release with notes
 
 ### Key Game Files
 
 **index.html**
-- Title and slogan
-- HUD display (Lives, Score, Coins, Best, Level, Combo)
-- Game container
-- Game Over modal
-- Particle containers
+- Game structure and UI
+- HUD (Lives, Score, Coins, Best, Level, Combo)
+- Game container and modals
 
 **style.css**
 - Dark theme (black background)
 - Responsive design
 - Animations and transitions
-- Modal and UI styling
-- Emoji sizing and positioning
+- Modal styling
 
 **script.js**
-- Game state management (score, lives, level, combo, coins)
-- Target mechanics (spawn, click handlers)
-- Lives system and game over logic
+- Game state (score, lives, level, combo, coins)
+- Target mechanics and click handlers
 - Level progression and speed scaling
 - Particle effects
-- localStorage for best score
+- localStorage persistence
 
 ---
 
-## Performance Targets
-- Page load: < 1 second
-- Smooth 60fps gameplay
-- Minimal CPU usage
-- Small bundle size (< 50KB total)
+## Code Standards
+
+### Naming
+- Meaningful variable names: `lives`, `gameActive`, not `x`, `flag`
+- Function names describe action: `removeLive()`, `endGame()`
+- CSS classes: `game-over-modal`, not `gom`
+- HTML IDs: `lives-count`, not `lc`
+
+### Comments
+- Explain "why", not "what"
+- ❌ `// increment combo`
+- ✅ `// increase combo on successful hit to build multiplier`
+- Comment complex logic only
+
+### Structure
+- One feature per commit
+- Atomic commits (one change per commit)
+- Clear commit messages: `feat:`, `fix:`, `docs:`, `refactor:`
+
+---
 
 ## Emoji Targets Reference
+
 ```javascript
 😀 - 1 point
 ⭐ - 5 points
@@ -200,107 +307,97 @@ Each version is:
 💣 - -10 coins + remove 1 life
 ```
 
-## Current Version: V3.1
-
-All V3.1 features completed:
-- ✅ Lives system (3 lives start)
-- ✅ Life loss mechanics (miss target, bomb click)
-- ✅ Game Over modal
-- ✅ Restart functionality (preserves Best Score)
-- ✅ UI improvements
-- ✅ Bug fixes
-
-See PLAN.md for next version (V3.2).
-
 ---
 
 ## Testing Checklist
 
-Before considering a feature complete:
-- [ ] Game runs without errors
-- [ ] Gameplay is smooth and responsive
+Before releasing a version:
+
+- [ ] Game runs without errors or warnings
+- [ ] Gameplay is smooth (60fps feel)
 - [ ] All existing features still work
-- [ ] Score, coins, level, combo update correctly
+- [ ] New feature works as intended
+- [ ] Score/coins/level/combo update correctly
 - [ ] Particle effects display properly
-- [ ] localStorage saves/loads Best Score
+- [ ] localStorage saves/loads (Best Score)
 - [ ] Mobile touch works smoothly
-- [ ] Vibration feedback triggers (if device supports it)
-- [ ] Restart button resets game (keeps Best Score)
+- [ ] Vibration feedback works (if applicable)
+- [ ] Game Over modal displays correctly
+- [ ] Restart button works and preserves Best Score
 - [ ] No console errors
-- [ ] Lives system works correctly (if feature includes it)
-- [ ] Game Over modal displays properly (if feature includes it)
 
 ---
 
 ## Common Tasks
 
-### To add a new game mechanic:
-1. Explain the approach and affected files
-2. Add logic to script.js
-3. Update index.html if UI changes needed
-4. Update style.css if styling changes needed
-5. Review code for errors
-6. Play-test thoroughly
-7. Update PLAN.md and CHANGELOG.md
-8. Create Git tag and GitHub Release
+### Add a new game mechanic
+1. Explain what will change (files, logic)
+2. Implement in script.js
+3. Update HTML/CSS if UI needed
+4. Review code (completion checklist)
+5. Play-test thoroughly
+6. Update PLAN.md and CHANGELOG.md
+7. Commit and release
 
-### To modify the UI:
-1. Explain the visual changes
-2. Update index.html for structure
-3. Update style.css for styling
-4. Update script.js if needed for functionality
+### Modify the UI
+1. Describe visual changes
+2. Update index.html (structure)
+3. Update style.css (styling)
+4. Update script.js (if logic needed)
 5. Test on mobile
 6. Update CHANGELOG.md
+7. Commit and release
 
-### To fix a bug:
-1. Identify the affected file
-2. Locate the problematic code
-3. Explain the fix
-4. Make the change with comments
-5. Review for side effects
-6. Test the fix and nearby features
-7. Update CHANGELOG.md under "Fixed"
+### Fix a bug
+1. Identify root cause
+2. Make minimal changes (1-5 lines usually)
+3. Verify the fix works
+4. Verify no regressions
+5. Update CHANGELOG.md (under "Fixed")
+6. Commit with clear message
 
 ---
 
 ## Git Commit Messages
 
-Use clear, descriptive commit messages:
+Format: `type: description`
+
 ```
 feat: Add shop system with coin spending
-fix: Prevent game over modal from showing multiple times
-docs: Update PLAN.md with V3.2 completion status
-style: Improve game over modal styling
-refactor: Simplify target click handler
+fix: Prevent premature life loss on game start
+docs: Update CHANGELOG.md with V3.2 details
+style: Improve game over modal appearance
+refactor: Simplify target selection logic
 ```
 
 ---
 
-## Questions to Ask Yourself
+## Questions Before Starting Any Task
 
-- Is this vanilla HTML/CSS/JS only?
+- Is this vanilla HTML/CSS/JS only (unless explicitly requested)?
 - Does this preserve existing gameplay?
+- Have I identified affected files?
+- Have I explained the approach?
 - Will this slow down the game?
 - Is the code easy to understand?
-- Have I explained the changes clearly?
-- Have I tested thoroughly?
-- Should PLAN.md be updated?
-- Should CHANGELOG.md be updated?
-- Is this ready for a new version tag?
+- Do I need to update documentation?
+- Is this ready for a version release?
 
 ---
 
 ## Release Checklist
 
 Before creating a Git tag and GitHub Release:
+
 - [ ] Feature is complete and working
-- [ ] Code review done (syntax, logic, errors)
-- [ ] Play-tested the game
+- [ ] Code passes completion checklist
+- [ ] Play-tested the game thoroughly
 - [ ] PLAN.md updated (feature marked ✅)
-- [ ] CHANGELOG.md has Added/Fixed sections
-- [ ] README.md shows new version as current
-- [ ] All commits are pushed
+- [ ] CHANGELOG.md updated (Added/Fixed sections)
+- [ ] README.md updated (version number if applicable)
+- [ ] All commits pushed to main
 - [ ] Ready to create Git tag
+- [ ] Release notes prepared
 
 ---
 
