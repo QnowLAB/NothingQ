@@ -45,6 +45,7 @@ More advanced gameplay, technical improvements, and new game modes.
 V6–V10+
 Expand NothingQ while keeping it lightweight, fast, and fun.
 
+
 **Last Updated:** July 10, 2026  
 **Maintainer:** QnowLAB  
 **Repository:** QnowLAB/NothingQ
