@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NothingQ V3.1</title>
+<title>NothingQ V3.2</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -56,6 +56,12 @@
 <span id="combo">x1</span>
 </div>
 
+<div>
+<button id="shopBtn">
+🏪 Shop
+</button>
+</div>
+
 </div>
 
 <div id="game"></div>
@@ -64,14 +70,101 @@
 
 <div id="levelUp"></div>
 
+<!-- Shop Modal -->
+
+<div id="shopModal" class="modal hidden">
+
+<div class="modal-content">
+
+<h2>🏪 Shop</h2>
+
+<p>Spend your coins wisely.</p>
+
+<div class="shop-item">
+
+<div>
+❤️ Extra Life
+<br>
+<small>+1 Life</small>
+</div>
+
+<button
+class="buyBtn"
+data-item="life"
+data-cost="100">
+100 🪙
+</button>
+
+</div>
+
+<div class="shop-item">
+
+<div>
+⚡ Slow Time
+<br>
+<small>10 slower targets</small>
+</div>
+
+<button
+class="buyBtn"
+data-item="slow"
+data-cost="75">
+75 🪙
+</button>
+
+</div>
+
+<div class="shop-item">
+
+<div>
+🔥 Combo Boost
+<br>
+<small>+5 Combo</small>
+</div>
+
+<button
+class="buyBtn"
+data-item="combo"
+data-cost="50">
+50 🪙
+</button>
+
+</div>
+
+<p id="shopMessage"></p>
+
+<button id="closeShopBtn">
+Close
+</button>
+
+</div>
+
+</div>
+
 <!-- Game Over Modal -->
+
 <div id="gameOverModal" class="modal hidden">
-  <div class="modal-content">
-    <h2>GAME OVER</h2>
-    <p>Final Score: <span id="finalScore">0</span></p>
-    <p>Best Score: <span id="bestScoreFinal">0</span></p>
-    <button id="restartBtn">Restart</button>
-  </div>
+
+<div class="modal-content">
+
+<h2>GAME OVER</h2>
+
+<p>
+Final Score:
+<span id="finalScore">0</span>
+</p>
+
+<p>
+Best Score:
+<span id="bestScoreFinal">0</span>
+</p>
+
+<button id="restartBtn">
+Restart
+</button>
+
+</div>
+
 </div>
 
 <script src="script.js"></script>
