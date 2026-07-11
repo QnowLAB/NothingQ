@@ -315,3 +315,98 @@ p{
     text-shadow:0 0 8px #ffff66;
 
 }
+
+/* =========================
+   V3.2 SHOP
+========================= */
+
+#shopBtn{
+
+    margin-top:20px;
+    padding:12px 28px;
+    font-size:20px;
+    font-weight:bold;
+    background:#ffcc00;
+    color:#000;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.2s;
+
+}
+
+#shopBtn:hover{
+
+    transform:scale(1.05);
+    box-shadow:0 0 20px #ffcc00;
+
+}
+
+#shopModal .modal-content{
+
+    border:3px solid #ffcc00;
+    box-shadow:0 0 30px rgba(255,204,0,.4);
+
+}
+
+.buyBtn{
+
+    display:block;
+    width:100%;
+    margin:15px 0;
+    padding:15px;
+    font-size:20px;
+    font-weight:bold;
+    background:#222;
+    color:#fff;
+    border:2px solid #555;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.2s;
+
+}
+
+.buyBtn:hover{
+
+    background:#333;
+    border-color:#ffcc00;
+    transform:scale(1.02);
+
+}
+
+.buyBtn:active{
+
+    transform:scale(.97);
+
+}
+
+#shopMessage{
+
+    min-height:28px;
+    margin:20px 0;
+    font-size:20px;
+    color:#00ff00;
+    font-weight:bold;
+
+}
+
+#closeShopBtn{
+
+    margin-top:10px;
+    padding:12px 35px;
+    font-size:18px;
+    font-weight:bold;
+    background:#ff4444;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+
+}
+
+#closeShopBtn:hover{
+
+    background:#ff2222;
+
+}
